@@ -53,7 +53,6 @@ class BoardingCard
                     array_splice($this->unsortedCards, $i, 1);
                     $i--;
                     $currentCardCount--;
-                    continue;
                 }
             }
 
