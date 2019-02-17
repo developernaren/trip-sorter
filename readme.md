@@ -11,8 +11,12 @@ It is not mentioned in the doc that the card will have departure and destination
 
 The example code is written at `src/index.php`.  
 In the example, I have added multiple flights, bus and train travels to generate the itinerary.  
+
+Run
+`composer install`
+
 The result can be viewed running this file from terminal as    
-`$ php src/index`  
+`$ php src/index.php`  
   
 To view it in the browser  
 `$ php -S localhost:8888 src/index.php` 
