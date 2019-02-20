@@ -16,37 +16,38 @@ class ItineraryTest extends TestCase
     public function testItineraryIsCorrectlyGenerated()
     {
 
-        $travel = new \App\Travel();
 
+        $cards = [];
         $ktmToIndia = new Flight('KTM', 'DEL', 'F16', 'A320', 'Counter 6', 'Counter 7', 'F17');
         $ktmToIndCard = new \App\BoardingCards\Card($ktmToIndia);
+        array_push($cards, $ktmToIndCard);
 
         $indToSng = new Flight('DEL', 'SNG', 'F16', 'A320', 'Counter 6', 'Counter 7', 'F17');
         $indToSngCard = new \App\BoardingCards\Card($indToSng);
+        array_push($cards, $indToSngCard);
 
         $sngToFrance = new Flight('SNG', 'FRN', 'F16', 'A320', 'Counter 6', 'Counter 7', 'F17');
         $sngToFranceCard = new \App\BoardingCards\Card($sngToFrance);
+        array_push($cards, $sngToFranceCard);
 
         $frToBR = new Flight('FRN', 'BR', 'F16', 'A320', 'Counter 6', 'Counter 7', 'F17');
         $frToBRCard = new \App\BoardingCards\Card($frToBR);
+        array_push($cards, $frToBRCard);
 
         $brToGer = new Flight('BR', 'GER', 'F16', 'A320', 'Counter 6', 'Counter 7', 'F17');
         $brToGerCard = new \App\BoardingCards\Card($brToGer);
+        array_push($cards, $brToGerCard);
 
         $gerToApr = new Bus('GER', 'APR', 'B12');
         $gerToAprCard = new \App\BoardingCards\Card($gerToApr);
+        array_push($cards, $gerToAprCard);
 
         $aprToCER = new Train('APR', 'CER', 'SK44', 'F23');
         $aprToCERCard = new \App\BoardingCards\Card($aprToCER);
+        array_push($cards, $aprToCERCard);
 
 
-        $travel->addBoardingCard($sngToFranceCard);
-        $travel->addBoardingCard($ktmToIndCard);
-        $travel->addBoardingCard($brToGerCard);
-        $travel->addBoardingCard($frToBRCard);
-        $travel->addBoardingCard($indToSngCard);
-        $travel->addBoardingCard($aprToCERCard);
-        $travel->addBoardingCard($gerToAprCard);
+        $travel = Travel::createFromBoardingCards($cards);
 
         $itinerary = new \App\Itinerary($travel);
 
@@ -67,7 +68,7 @@ class ItineraryTest extends TestCase
 
     public function testItineraryCannotBeGeneratedForTravelWithNoCards()
     {
-        $travel = new Travel();
+        $travel = Travel::createFromBoardingCards([]);
         $itinerary = new Itinerary($travel);
 
         $this->expectException(NoBoardingCardException::class);

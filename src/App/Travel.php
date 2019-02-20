@@ -11,16 +11,35 @@ class Travel
     private $sorter;
     private $sortedCards = [];
 
-    public function __construct()
+
+    private function __construct($boardingCard)
     {
         $this->sorter = new BoardingCard();
+
+        if($boardingCard instanceof Card){
+            $this->addBoardingCard($boardingCard);
+        }
+
+        if(is_array($boardingCard)){
+            $this->addBoardingCards($boardingCard);
+        }
+    }
+
+    public static function createFromBoardingCard(Card $card)
+    {
+        return new Travel($card);
+    }
+
+    public static function createFromBoardingCards(array $cards)
+    {
+        return new Travel($cards);
     }
 
     /**
      * Adds 1 boarding cards to travel
      * @param Card $boardingCard
      */
-    public function addBoardingCard( Card $boardingCard )
+    private function addBoardingCard( Card $boardingCard )
     {
         array_push($this->boardingCards, $boardingCard);
     }
@@ -31,7 +50,7 @@ class Travel
      * @param array $boardingCards
      *
      */
-    public function addBoardingCards( $boardingCards = [])
+    private function addBoardingCards( $boardingCards = [])
     {
         foreach ($boardingCards as $boardingCard){
             $this->addBoardingCard($boardingCard);
